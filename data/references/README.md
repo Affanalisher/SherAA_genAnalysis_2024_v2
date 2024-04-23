@@ -1,4 +1,12 @@
 Downloaded SILVA v138 SEED file for alignment and taxonomy from 
 https://mothur.s3.us-east-2.amazonaws.com/wiki/silva.seed_v138_1.tgz
 
+we used wget, mkdir and tar to download and extract silva_seed file
 
+mkdir data/references/silva_seed/
+
+wget -nc -P data/references/ 
+https://mothur.s3.us-east-2.amazonaws.com/wiki/silva.seed_v138_1.tgz
+
+tar xvzf data/referencestar xvzf data/references/silva.seed_v138_1.tgz -C 
+data/references/silva_seed/
