@@ -19,4 +19,11 @@ wget --no-check-certificate -P "$path" -nc https://rrndb.umms.med.umich.edu/stat
 
 unzip -n -d "$path" "$target".zip
 
-touch "$target"
+# if something happened with the download step, unzip won't work and give the
+# following FAIL output.
+if [[ $? -eq 0 ]]
+then
+  touch "$target"
+else
+  echo "FAIL: we are not able to successfully extract $filename"
+fi
