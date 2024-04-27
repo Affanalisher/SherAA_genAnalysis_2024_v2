@@ -45,7 +45,7 @@ data/raw/rrnDB-5.8_16S_rRNA.align : code/align_sequences.sh\
 # extract any region from the sequence, put it into a new directory and rename it
 data/%/rrnDB.align data/%/rrnDB.bad.accnos : code/extract_region.sh\
 													data/raw/rrnDB-5.8_16S_rRNA.align\
-													code/align_sequences.sh
+													code/mothur/mothur
 		code/extract_region.sh $@
 
 
