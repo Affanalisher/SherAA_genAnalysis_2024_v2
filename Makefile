@@ -7,6 +7,10 @@
 # target : prerequisite1 prerequisite2 prerequisite3
 #	(tab)recipe
 
+# rule to install Mothur
+code/mothur/mothur : code/install_mothur.sh
+	code/install_mothur.sh
+
 
 # rule for downloading SILVA and data
 data/references/silva_seed/silva.seed_v138_1.align : code/get_silva_seed.sh
@@ -32,14 +36,16 @@ data/raw/rrnDB-5.8_pantaxa_stats_RDP.tsv : code/get_rrndb_files.sh
 
 
 # rule to align rrnDB fasta and SILVA Seed references
-data/raw/rrnDB-5.8_16S_rRNA.align : data/references/silva_seed/silva.seed_v138_1.align\
+data/raw/rrnDB-5.8_16S_rRNA.align : code/align_sequences.sh\
+													data/references/silva_seed/silva.seed_v138_1.align\
 													data/raw/rrnDB-5.8_16S_rRNA.fasta\
-													code/align_sequences.sh
+													code/mothur/mothur
 		./code/align_sequences.sh
 
 # extract any region from the sequence, put it into a new directory and rename it
 data/%/rrnDB.align data/%/rrnDB.bad.accnos : code/extract_region.sh\
-													data/raw/rrnDB-5.8_16S_rRNA.align
+													data/raw/rrnDB-5.8_16S_rRNA.align\
+													code/align_sequences.sh
 		code/extract_region.sh $@
 
 
