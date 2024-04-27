@@ -65,8 +65,8 @@ end=$end, outputdir=$path); filter.seqs(vertical=TRUE)"
 # coordinates
 
 if [[ $? -eq 0 ]] # -eq: equal, -ne: not equal, -gt: greater than, -lt: less than
-then # ^\.* means that repeat the period as many times as it comes.
-  sed "s/^\.*/-/" $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta > $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta
+then # ^\.* means that repeat 0 or more (.+ means 1 or more) period as many times as it comes.
+  sed "s/^\.+/-/" $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta > $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta
   touch $path/rrnDB-5.8_16S_rRNA.bad.accnos
   touch $path/rrnDB-5.8_16S_rRNA.scrap.pcr.align
 else
