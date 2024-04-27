@@ -65,7 +65,8 @@ end=$end, outputdir=$path); filter.seqs(vertical=TRUE)"
 # coordinates
 
 if [[ $? -eq 0 ]] # -eq: equal, -ne: not equal, -gt: greater than, -lt: less than
-then
+then # ^\.* means that repeat the period as many times as it comes.
+  sed "s/^\.*/-/" $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta > $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta
   touch $path/rrnDB-5.8_16S_rRNA.bad.accnos
   touch $path/rrnDB-5.8_16S_rRNA.scrap.pcr.align
 else
@@ -76,7 +77,7 @@ fi
 
 # moves the pcr and filter file and renames it to be the same as target
 # i.e. rrnDB.align
-mv $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta $target
+mv $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta $target
 
 # moves the bad accnos file and renames it to be the same as target
 # i.e. rrnDB.bad.accnos
@@ -86,3 +87,4 @@ mv $path/rrnDB-5.8_16S_rRNA.bad.accnos $path/rrnDB.bad.accnos
 rm $path/rrnDB-5.8_16S_rRNA.pcr.align
 rm $path/rrnDB-5.8_16S_rRNA.scrap.pcr.align
 rm $path/rrnDB-5.filter
+rm $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta
