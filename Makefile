@@ -36,3 +36,21 @@ data/raw/rrnDB-5.8_16S_rRNA.align : data/references/silva_seed/silva.seed_v138_1
 													data/raw/rrnDB-5.8_16S_rRNA.fasta\
 													code/align_sequences.sh
 		./code/align_sequences.sh
+
+# extract any region from the sequence, put it into a new directory and rename it
+data/%/rrnDB.align data/%/rrnDB.bad.accnos : code/extract_region.sh\
+													data/raw/rrnDB-5.8_16S_rRNA.align
+		code/extract_region.sh $@
+
+
+#
+# # extract v4 region from the sequence, put it into a new directory and rename it
+# data/v4/rrnDB.align data/v4/rrnDB.bad.accnos : code/extract_region.sh\
+# 												data/raw/rrnDB-5.8_16S_rRNA.align
+# 		code/extract_region.sh $@
+#
+#
+# # extract v34 region from the sequence, put it into a new directory and rename it
+# data/v34/rrnDB.align data/v34/rrnDB.bad.accnos : code/extract_region.sh\
+# 												data/raw/rrnDB-5.8_16S_rRNA.align
+# 		code/extract_region.sh $@
