@@ -48,6 +48,11 @@ data/%/rrnDB.align data/%/rrnDB.bad.accnos : code/extract_region.sh\
 													code/mothur/mothur
 		code/extract_region.sh $@
 
+# rule to generate count table and a file containing unique sequences
+data/%/rrnDB.unique.align data/%/data.count_table : code/count_unique_seqs.sh\
+													data/%/rrnDB.align
+													code/mothur/mothur
+		code/count_unique_seqs.sh $@ # make sure you make count_unique_seqs.sh executable
 
 #
 # # extract v4 region from the sequence, put it into a new directory and rename it
