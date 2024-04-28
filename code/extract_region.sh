@@ -59,6 +59,9 @@ mkdir -p $path
 code/mothur/mothur "#pcr.seqs(fasta=data/raw/rrnDB-5.8_16S_rRNA.align, start=$start,
 end=$end, outputdir=$path); filter.seqs(vertical=TRUE)"
 
+# test to check whether there are any leading periods
+# grep -v "^>" $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta | grep "\."
+
 # this checks if mothur executed successfully.
 # if mothur executes successfully, then touch the files that might not have between
 # generated in pcr.seqs because the sequences spanned the desired region'#!/bin/sh
@@ -66,7 +69,21 @@ end=$end, outputdir=$path); filter.seqs(vertical=TRUE)"
 
 if [[ $? -eq 0 ]] # -eq: equal, -ne: not equal, -gt: greater than, -lt: less than
 then # ^\.* means that repeat 0 or more (.+ means 1 or more) period as many times as it comes.
-  sed "s/^\.+/-/" $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta > $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta
+
+  # for some reason, the sed below doesn't work, hence commented out.
+  # sed "s/^\.+/-/" $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta > $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta
+
+  # this is saying that any line that doesn't start with > change all periods with hyphens
+  # sed '/>/ !s/\./-/g' $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta > $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta
+
+  # OR
+
+  # this is saying that take any line that doesn't start with > and replace periods with hyphens
+  # this also works with grep and is also not sensitive to double quotes.
+  sed "/^[^>]/ s/\./-/g" $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta > $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta
+
+  # grep -v "^>" $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta | grep "\."
+
   touch $path/rrnDB-5.8_16S_rRNA.bad.accnos
   touch $path/rrnDB-5.8_16S_rRNA.scrap.pcr.align
 else
