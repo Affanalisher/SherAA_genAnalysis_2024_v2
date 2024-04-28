@@ -82,7 +82,8 @@ then # ^\.* means that repeat 0 or more (.+ means 1 or more) period as many time
   # this also works with grep and is also not sensitive to double quotes.
   sed "/^[^>]/ s/\./-/g" $path/rrnDB-5.8_16S_rRNA.pcr.filter.fasta > $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta
 
-  # grep -v "^>" $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta | grep "\."
+# grep -c gives the count
+  TEST=`grep -v "^>" $path/rrnDB-5.8_16S_rRNA.pcr.filter.test.fasta | grep -c "\."`
 
   touch $path/rrnDB-5.8_16S_rRNA.bad.accnos
   touch $path/rrnDB-5.8_16S_rRNA.scrap.pcr.align
@@ -91,6 +92,12 @@ else
   exit 1
 fi
 
+# test to  see if there are nay matches
+if [[ $TEST -ne 0 ]]
+then
+  echo "FAIL: sequences contained periods."
+  exit 1
+fi
 
 # moves the pcr and filter file and renames it to be the same as target
 # i.e. rrnDB.align
