@@ -1,4 +1,8 @@
 data/
 code/mothur/
+.DS_Store
+.Rhistory
+code/.DS_Store
+
 
 *logfile
